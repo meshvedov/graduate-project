@@ -1,4 +1,5 @@
 DELETE FROM menu;
+DELETE FROM vote;
 DELETE FROM restaurant;
 DELETE FROM user_roles;
 DELETE FROM users;
