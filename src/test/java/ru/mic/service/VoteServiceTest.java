@@ -3,9 +3,7 @@ package ru.mic.service;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Example;
-import ru.mic.model.AbstractEntity;
 import ru.mic.model.Role;
 import ru.mic.model.User;
 import ru.mic.model.Vote;
@@ -14,7 +12,6 @@ import ru.mic.repository.VoteRepository;
 
 import java.time.LocalTime;
 
-import static org.junit.Assert.*;
 import static ru.mic.RestsTestData.REST_ID;
 
 public class VoteServiceTest extends AbstractServiceTest {
@@ -69,7 +66,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void votes() throws Exception {
-        int votes = repo.getVotesByRestaurantId(REST_ID);
+        int votes = repo.getCountVotesByRestaurantId(REST_ID);
         Assertions.assertThat(votes).isEqualTo(2);
     }
 }

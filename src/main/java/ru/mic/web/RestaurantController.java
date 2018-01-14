@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mic.model.Restaurant;
+import ru.mic.model.Vote;
 import ru.mic.repository.VoteRepository;
 import ru.mic.service.RestaurantService;
 import ru.mic.to.RestaurantWithVotes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +36,15 @@ public class RestaurantController {
     }
 
     private RestaurantWithVotes createWithVotes(Restaurant rest) {
-        int votes = voteRepository.getVotesByRestaurantId(rest.getId());
-        return new RestaurantWithVotes(rest.getId(), rest.getName(), rest.getAddress(), votes);
+        int votes = voteRepository.getCountVotesByRestaurantId(rest.getId());
+        List<Vote> list = voteRepository.getVotesByRestaurantId(rest.getId());
+        LocalDate localDateNow = LocalDate.now();
+        int count = 0;
+        for (Vote vote : list) {
+            if (vote.getVoteTime().toLocalDate().isEqual(localDateNow)) {
+                count++;
+            }
+        }
+        return new RestaurantWithVotes(rest.getId(), rest.getName(), rest.getAddress(), count);
     }
 }

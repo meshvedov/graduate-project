@@ -29,6 +29,9 @@ INSERT INTO menu (name, price, restaurant_id) VALUES
   ('coffee', 7, 100004);
 
 INSERT INTO vote (restaurant_id, user_id, time) VALUES
-  (100003, 100000, '2018-01-10 12:0:0'),
+  (100003, 100000, '2018-01-14 12:0:0'),
   (100003, 100001, '2018-01-10 10:0:0'),
-  (100004, 100002, '2018-01-10 11:0:0');
+  (100004, 100002, '2018-01-11 11:0:0');
+
+INSERT INTO restaurant_user (restaurant_id, user_id) VALUES
+(100003, 100000);
