@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -22,6 +23,9 @@ import static ru.mic.RestsTestData.REST_ID;
 public class MenuServiceImplTest extends AbstractServiceTest {
 
     @Autowired
+    private CacheManager cacheManager;
+
+    @Autowired
     protected MenuService service;
 
     @Autowired
@@ -29,6 +33,7 @@ public class MenuServiceImplTest extends AbstractServiceTest {
 
     @Before
     public void setUp() throws Exception {
+        cacheManager.getCache("menus").clear();
     }
 
     @After

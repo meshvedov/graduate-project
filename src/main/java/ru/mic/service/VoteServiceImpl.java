@@ -33,7 +33,7 @@ public class VoteServiceImpl implements VoteService {
         } else {
             LocalDateTime ldt = vote.getVoteTime();
             LocalDateTime todayTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(TIME, 00));
-            if (ldt.isBefore(todayTime) || ldt.isEqual(todayTime)) {
+            if (ldt.isBefore(todayTime)) {
                 vote.setVoteTime(LocalDateTime.now());
                 repository.save(vote);
                 return vote;

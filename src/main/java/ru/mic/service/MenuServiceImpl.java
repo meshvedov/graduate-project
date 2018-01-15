@@ -1,6 +1,7 @@
 package ru.mic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.mic.model.Menu;
 import ru.mic.repository.MenuRepositoryJpa;
@@ -28,6 +29,7 @@ public class MenuServiceImpl implements MenuService {
         return repository.getMenuByIdWithRestaurant(id);
     }
 
+    @Cacheable("menus")
     @Override
     public List<Menu> getMenusByRestaurantId(int restaurantId) {
         return repository.getMenusByRestaurantId(restaurantId);

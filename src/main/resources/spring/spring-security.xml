@@ -6,20 +6,28 @@
                             http://www.springframework.org/schema/security
                             http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <security:http pattern="/resources/**" security="none"/>
 
-    <security:http auto-config="true">
-        <security:intercept-url pattern="/users*" access="ROLE_ADMIN"/>
+    <security:http pattern="/users/**" name="restSecurityFilterChain" use-expressions="true" create-session="stateless">
         <security:http-basic />
+        <security:intercept-url pattern="/users" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+
 
     </security:http>
 
-    <security:jdbc-user-service id="userService" data-source-ref="dataSource" users-by-username-query="SELECT users.name, users.password, 'true' as enabled FROM users WHERE users.name = ?"
-                                authorities-by-username-query="SELECT users.name, user_roles.role as authorities FROM users, user_roles WHERE users.name = ? AND users.id = user_roles.user_id"/>
+    <security:jdbc-user-service id="userService1" data-source-ref="dataSource" users-by-username-query="SELECT users.name, users.password, 'true' as enabled FROM users WHERE users.name=?"
+                                authorities-by-username-query="SELECT users.name, user_roles.role as authorities FROM users INNER JOIN user_roles ON users.id = user_roles.user_id WHERE users.name=?"/>
+
+    <security:user-service id="inMemoryUserDetailsManager">
+        <security:user name="admin" password="1" authorities="ROLE_ADMIN"/>
+    </security:user-service>
+
+    <security:jdbc-user-service data-source-ref="dataSource" id = "userService"/>
 
     <security:authentication-manager>
-        <security:authentication-provider user-service-ref="userService"/>
-            <!--<security:jdbc-user-service data-source-ref="dataSource"-->
-                                        <!--users-by-username-query="SELECT users.name, users.password, 'true' as enabled FROM users WHERE users.name = ?"-->
-                                        <!--authorities-by-username-query="SELECT users.name, user_roles.role as authorities FROM users, user_roles WHERE users.name = ? AND users.id = user_roles.user_id"/>-->
+
+        <security:authentication-provider user-service-ref="inMemoryUserDetailsManager"/>
+
     </security:authentication-manager>
 </beans>

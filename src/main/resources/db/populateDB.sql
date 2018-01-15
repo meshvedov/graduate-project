@@ -1,13 +1,14 @@
 DELETE FROM menu;
 DELETE FROM vote;
+DELETE FROM restaurant_user;
 DELETE FROM restaurant;
 DELETE FROM user_roles;
 DELETE FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, password) VALUES
-  ('Admin', 'admin'),
-  ('User1', 'user1'),
+  ('admin', 'admin'),
+  ('user1', 'user1'),
   ('User2', 'user2');
 
 INSERT INTO user_roles (user_id, role) VALUES
@@ -28,10 +29,10 @@ INSERT INTO menu (name, price, restaurant_id) VALUES
   ('cake', 6, 100004),
   ('coffee', 7, 100004);
 
-INSERT INTO vote (restaurant_id, user_id, time) VALUES
-  (100003, 100000, '2018-01-14 12:0:0'),
-  (100003, 100001, '2018-01-10 10:0:0'),
-  (100004, 100002, '2018-01-11 11:0:0');
+INSERT INTO vote (restaurant_id, user_id) VALUES
+  (100003, 100000),
+  (100003, 100001),
+  (100004, 100002);
 
 INSERT INTO restaurant_user (restaurant_id, user_id) VALUES
 (100003, 100000);

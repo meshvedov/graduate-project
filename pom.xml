@@ -22,6 +22,9 @@
         <hibernate.version>5.2.12.Final</hibernate.version>
         <hibernate-validator.version>6.0.5.Final</hibernate-validator.version>
 
+        <!--Tools-->
+        <ehcache.version>3.4.0</ehcache.version>
+
     </properties>
 
     <build>
@@ -160,6 +163,26 @@
                     <artifactId>classmate</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!--ORM-->
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!--HSQLDB-->

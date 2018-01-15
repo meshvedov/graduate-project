@@ -11,4 +11,5 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public abstract class AbstractServiceTest {
 
+
 }

@@ -1,3 +1,4 @@
+DROP TABLE restaurant_user IF EXISTS;
 DROP TABLE menu IF EXISTS;
 DROP TABLE vote IF EXISTS;
 DROP TABLE restaurant IF EXISTS;
