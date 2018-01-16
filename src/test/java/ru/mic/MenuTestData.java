@@ -7,6 +7,7 @@ import ru.mic.web.json.JsonUtil;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static ru.mic.model.AbstractEntity.START_SEQ;
 
@@ -26,5 +27,18 @@ public class MenuTestData {
 
     public static ResultMatcher contentJson(Menu... menus) {
         return content().json(JsonUtil.writeIgnoreProps(Arrays.asList(menus), ""));
+    }
+
+    public static void assertMatch(Menu actual, Menu expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant");
+    }
+
+    public static void assertMatch(Iterable<Menu> actual, Menu... expected) {
+        assertMatch(actual, Arrays.asList(expected));
+    }
+
+
+    public static void assertMatch(Iterable<Menu> actual, Iterable<Menu> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields("restaurant").isEqualTo(expected);
     }
 }
