@@ -1,6 +1,7 @@
 package ru.mic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.mic.model.Restaurant;
 import ru.mic.repository.RestaurantRepository;
@@ -17,10 +18,9 @@ public class RestaurantServiceImpl implements RestaurantService {
         this.repository = repository;
     }
 
+    @Cacheable("rest")
     @Override
     public List<Restaurant> getAll() {
         return repository.findAll();
     }
-
-
 }

@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mic.model.Menu;
-import ru.mic.model.User;
-import ru.mic.repository.MenuRepositoryJpa;
+import ru.mic.repository.MenuRepository;
 import ru.mic.repository.RestaurantAdminRepository;
 import ru.mic.repository.UserRepository;
 import ru.mic.to.UserDTO;
@@ -26,7 +25,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private MenuRepositoryJpa menuRepository;
+    private MenuRepository menuRepository;
 
     @Autowired
     private RestaurantAdminRepository adminRepository;

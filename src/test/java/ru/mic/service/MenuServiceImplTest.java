@@ -1,19 +1,18 @@
 package ru.mic.service;
 
 import org.assertj.core.api.Assertions;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.mic.model.Menu;
-import ru.mic.repository.MenuRepositoryJpa;
+import ru.mic.repository.MenuRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,11 +28,20 @@ public class MenuServiceImplTest extends AbstractServiceTest {
     protected MenuService service;
 
     @Autowired
-    private MenuRepositoryJpa repositoryJpa;
+    private MenuRepository repositoryJpa;
 
+    @PersistenceContext
+    private EntityManager em;
     @Before
     public void setUp() throws Exception {
         cacheManager.getCache("menus").clear();
+
+        Session s = (Session) em.getDelegate();
+        SessionFactory sf = s.getSessionFactory();
+//        sf.evict(User.class);
+//        sf.getCache().evictEntity(User.class, BaseEntity.START_SEQ);
+//        sf.getCache().evictEntityRegion(User.class);
+        sf.getCache().evictAllRegions();
     }
 
     @After

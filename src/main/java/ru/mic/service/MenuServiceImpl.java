@@ -1,10 +1,11 @@
 package ru.mic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.mic.model.Menu;
-import ru.mic.repository.MenuRepositoryJpa;
+import ru.mic.repository.MenuRepository;
 import ru.mic.repository.RestaurantRepository;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
-    private MenuRepositoryJpa repository;
+    private MenuRepository repository;
 
     @Autowired
     private RestaurantRepository restaurantRepository;
@@ -36,11 +37,13 @@ public class MenuServiceImpl implements MenuService {
     }
 
 
+    @CacheEvict(value = "menus", allEntries = true)
     public void delete(int id, int restaurantId) {
         repository.deleteMenuByIdAndRestaurantId(id, restaurantId);
     }
 
 
+    @CacheEvict(value = "menus", allEntries = true)
     public Menu save(Menu menu, int restaurantId) {
         if (!menu.isNew())
             return null;
@@ -48,6 +51,7 @@ public class MenuServiceImpl implements MenuService {
         return repository.save(menu);
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @Override
     public Menu update(Menu menu, int id, int restaurantId) {
         if (menu.isNew())

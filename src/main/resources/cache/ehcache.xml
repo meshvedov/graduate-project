@@ -22,4 +22,5 @@
     </cache-template>
 
     <cache alias="menus" uses-template="singleNonExpiryCache"/>
+    <cache alias="rest" uses-template="singleNonExpiryCache"/>
 </config>
