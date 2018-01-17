@@ -22,6 +22,6 @@ public class VoteController {
         if (saved == null) {
             return new ResponseEntity<Vote>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Vote>(HttpStatus.OK);
+        return new ResponseEntity<Vote>(saved, HttpStatus.OK);
     }
 }

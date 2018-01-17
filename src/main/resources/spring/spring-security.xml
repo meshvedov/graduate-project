@@ -16,8 +16,9 @@
         <!---->
     <!--</security:http>-->
 
-    <security:http auto-config="true">
-        <security:intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN, ROLE_USER')"/>
+    <security:http use-expressions="true" create-session="stateless">
+        <security:intercept-url pattern="/**/users" access="hasAnyRole('ROLE_ADMIN, ROLE_USER')"/>
+        <security:http-basic />
     </security:http>
 
     <security:jdbc-user-service id="userService1" data-source-ref="dataSource" users-by-username-query="SELECT users.name as username, users.password as password, 'true' as enabled FROM users WHERE users.name=?"
@@ -32,7 +33,7 @@
 
     <security:authentication-manager>
 
-        <security:authentication-provider user-service-ref="userService1"/>
+        <security:authentication-provider user-service-ref="inMemoryUserDetailsManager"/>
 
     </security:authentication-manager>
 </beans>

@@ -153,12 +153,12 @@
         </dependency>
         <!--end-->
 
-        <!--<dependency>-->
-        <!--<groupId>org.apache.tomcat</groupId>-->
-        <!--<artifactId>tomcat-servlet-api</artifactId>-->
-        <!--<version>8.5.20</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-servlet-api</artifactId>
+        <version>8.5.20</version>
+        <scope>provided</scope>
+        </dependency>
 
         <!--Hibernate-->
         <dependency>

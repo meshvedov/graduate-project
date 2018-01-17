@@ -28,15 +28,13 @@ public class VoteServiceImpl implements VoteService {
         Vote vote = repository.getByUserId(userId);
         if (vote == null) {
             vote = new Vote(restId, userId);
-            repository.save(vote);
-            return vote;
+            return repository.save(vote);
         } else {
             LocalDateTime ldt = vote.getVoteTime();
             LocalDateTime todayTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(TIME, 00));
             if (ldt.isBefore(todayTime)) {
                 vote.setVoteTime(LocalDateTime.now());
-                repository.save(vote);
-                return vote;
+                return repository.save(vote);
             }
         }
         return null;

@@ -6,4 +6,6 @@ public interface VoteService {
 
     Vote save(int restId, int userId);
 
+    void setTIME(int time);
+
 }
