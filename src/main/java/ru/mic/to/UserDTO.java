@@ -1,8 +1,9 @@
 package ru.mic.to;
 
+import org.springframework.util.comparator.Comparators;
 import ru.mic.model.Role;
 
-import java.util.Set;
+import java.util.*;
 
 public class UserDTO {
 
@@ -20,9 +21,13 @@ public class UserDTO {
         this.roles = roles;
     }
 
-    public UserDTO(Integer id, String name) {
+    public UserDTO(Integer id, String name, Role role, Role... roles) {
         this.id = id;
         this.name = name;
+        this.roles = EnumSet.of(role, roles);
+//        Set<Role> sorted = new TreeSet<>(Comparator.reverseOrder());
+//        sorted.addAll(EnumSet.of(role, roles));
+//        this.roles = sorted;
     }
 
     public Integer getId() {

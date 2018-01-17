@@ -7,27 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-import ru.mic.JpaUtil;
+import ru.mic.service.MenuService;
+import ru.mic.utils.JpaUtil;
 import ru.mic.TestUtil;
 import ru.mic.model.Menu;
 import ru.mic.web.json.JsonUtil;
 
 import javax.annotation.PostConstruct;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -35,40 +29,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.mic.MenuTestData.*;
 import static ru.mic.RestsTestData.REST_ID;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-mvc.xml"})
-@WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
-public class MenuControllerTest {
+public class MenuControllerTest extends AbstractControllerTest {
 
     private static final String URL = "/rest/restaurants/";
 
-    private MockMvc mockMvc;
-
     @Autowired
-    private CacheManager cacheManager;
-    @Autowired(required = false)
-    private JpaUtil jpaUtil;
+    private MenuService menuService;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @PostConstruct
-    private void postConstruct() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .build();
-    }
-
-    @Before
-    public void setUp() {
-        cacheManager.getCache("menus").clear();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
     @Test
     public void listMenus() throws Exception {
-        mockMvc.perform(get(URL +"/100003/menus"))
+        mockMvc.perform(get(URL + "/100003/menus"))
                 .andExpect(status().isOk()).andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(menu1_1, menu1_2, menu1_3));
@@ -89,11 +59,23 @@ public class MenuControllerTest {
 
     @Test
     public void updateMenu() throws Exception {
+        Menu menu = menuService.getOne(MENU_ID, REST_ID);
+        menu.setPrice(100);
+        ResultActions actions = mockMvc.perform(put(URL + REST_ID + "/menu/" + menu.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(menu)))
+                .andExpect(status().isOk());
 
+        Menu returned = TestUtil.readFromJson(actions, Menu.class);
+        assertMatch(menu, returned);
     }
 
     @Test
     public void deleteMenu() throws Exception {
+        ResultActions actions = mockMvc.perform(delete(URL + REST_ID + "/menu/" + MENU_ID))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        assertMatch(menuService.getMenusByRestaurantId(REST_ID), menu1_2, menu1_3);
     }
 
 }

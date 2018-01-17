@@ -28,4 +28,6 @@
         <property name="TIME" value="11"/>
     </bean>
 
+    <bean class="ru.mic.utils.JpaUtil"/>
+
 </beans>

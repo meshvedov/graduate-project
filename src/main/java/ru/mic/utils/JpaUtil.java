@@ -1,4 +1,4 @@
-package ru.mic;
+package ru.mic.utils;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -30,9 +30,7 @@ public class User extends AbstractEntity {
     public User() {}
 
     public User(@NotNull String name, @NotNull String password, Set<Role> roles) {
-        this.name = name;
-        this.password = password;
-        this.roles = roles;
+        this(null, name, password, roles);
     }
 
     public User(Integer id, @NotNull String name, @NotNull String password, Role role, Role... roles) {
