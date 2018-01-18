@@ -31,8 +31,8 @@ INSERT INTO menu (name, price, restaurant_id) VALUES
 
 INSERT INTO vote (restaurant_id, user_id) VALUES
   (100003, 100000),
-  (100003, 100001),
-  (100004, 100002);
+  (100003, 100001);
+--   (100004, 100002);
 
 INSERT INTO restaurant_user (restaurant_id, user_id) VALUES
 (100003, 100000);
