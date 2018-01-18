@@ -29,15 +29,13 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     @Test
     public void listRests() throws Exception {
         RestaurantWithVotes restaurantWithVotes1 = new RestaurantWithVotes(REST_ID, "rest1", "street One", 2);
-        RestaurantWithVotes restaurantWithVotes2 = new RestaurantWithVotes(REST_ID + 1, "rest2", "street Two", 1);
+        RestaurantWithVotes restaurantWithVotes2 = new RestaurantWithVotes(REST_ID + 1, "rest2", "street Two", 0);
         String expected = JsonUtil.writeIgnoreProps(Arrays.asList(restaurantWithVotes1, restaurantWithVotes2));
         ResultActions actions = mockMvc.perform(get(URL).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-
-        String readJson = TestUtil.getContent(actions);
-        Assertions.assertThat(readJson).isEqualTo(expected);
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(TestUtil.contentJson(restaurantWithVotes1, restaurantWithVotes2));
     }
 
 }

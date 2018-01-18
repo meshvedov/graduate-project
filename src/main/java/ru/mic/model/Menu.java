@@ -2,6 +2,7 @@ package ru.mic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ public class Menu extends AbstractEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
+    @Range(min = 0)
     private int price;
 
     @JsonIgnore

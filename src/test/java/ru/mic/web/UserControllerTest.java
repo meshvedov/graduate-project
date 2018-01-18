@@ -33,7 +33,7 @@ public class UserControllerTest extends AbstractControllerTest {
 
     @Test
     public void listAll() throws Exception {
-        UserDTO user1 = new UserDTO(USER_ID, "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
+        UserDTO user1 = new UserDTO(USER_ID, "user", Role.ROLE_ADMIN, Role.ROLE_USER);
         UserDTO user2 = new UserDTO(USER_ID + 1, "user1", EnumSet.of(Role.ROLE_USER));
         UserDTO user3 = new UserDTO(USER_ID + 2, "user2", EnumSet.of(Role.ROLE_USER));
 
