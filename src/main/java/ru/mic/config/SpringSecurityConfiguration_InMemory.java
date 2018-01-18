@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SpringSecurityConfiguration_InMemory extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -23,7 +23,7 @@ public class SpringSecurityConfiguration_InMemory extends WebSecurityConfigurerA
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/users/*").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/users").hasRole("USER")
                 .and().csrf().disable();
     }
 }

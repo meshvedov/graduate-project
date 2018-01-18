@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.transaction.annotation.Transactional;
 import ru.mic.model.Menu;
 import ru.mic.repository.MenuRepository;
 
@@ -19,30 +20,14 @@ import java.util.List;
 import static ru.mic.MenuTestData.*;
 import static ru.mic.RestsTestData.REST_ID;
 
+@Transactional
 public class MenuServiceImplTest extends AbstractServiceTest {
-
-    @Autowired
-    private CacheManager cacheManager;
 
     @Autowired
     protected MenuService service;
 
     @Autowired
     private MenuRepository repositoryJpa;
-
-    @PersistenceContext
-    private EntityManager em;
-    @Before
-    public void setUp() throws Exception {
-        cacheManager.getCache("menus").clear();
-
-        Session s = (Session) em.getDelegate();
-        SessionFactory sf = s.getSessionFactory();
-//        sf.evict(User.class);
-//        sf.getCache().evictEntity(User.class, BaseEntity.START_SEQ);
-//        sf.getCache().evictEntityRegion(User.class);
-        sf.getCache().evictAllRegions();
-    }
 
     @After
     public void tearDown() throws Exception {

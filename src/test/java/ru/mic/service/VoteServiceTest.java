@@ -63,10 +63,4 @@ public class VoteServiceTest extends AbstractServiceTest {
         Vote vote1 = repo.getByUserId(user.getId());
         Assertions.assertThat(voteRepeat).isNull();
     }
-
-    @Test
-    public void votes() throws Exception {
-        int votes = repo.getCountVotesByRestaurantId(REST_ID);
-        Assertions.assertThat(votes).isEqualTo(2);
-    }
 }
