@@ -4,6 +4,7 @@ DELETE FROM restaurant_user;
 DELETE FROM restaurant;
 DELETE FROM user_roles;
 DELETE FROM users;
+-- DELETE FROM history;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, password) VALUES

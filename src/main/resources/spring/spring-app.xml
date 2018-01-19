@@ -30,4 +30,6 @@
 
     <bean class="ru.mic.utils.JpaUtil"/>
 
+    <bean class="ru.mic.utils.ScheduledTasks"/>
+
 </beans>

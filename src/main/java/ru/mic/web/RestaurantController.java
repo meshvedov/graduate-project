@@ -24,26 +24,11 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @Autowired
-    private VoteRepository voteRepository;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestaurantWithVotes>> listRests() {
-        List<Restaurant> restaurants = restaurantService.getAll();
-        List<RestaurantWithVotes> list = restaurants.stream().map(this::createWithVotes).collect(Collectors.toList());
+        List<RestaurantWithVotes> list = restaurantService.getAll();
         return new ResponseEntity<List<RestaurantWithVotes>>(list, HttpStatus.OK);
     }
 
-    private RestaurantWithVotes createWithVotes(Restaurant rest) {
-        int votes = voteRepository.getCountVotesByRestaurantId(rest.getId());
-        List<Vote> list = voteRepository.getVotesByRestaurantId(rest.getId());
-        LocalDate localDateNow = LocalDate.now();
-        int count = 0;
-        for (Vote vote : list) {
-            if (vote.getVoteTime().toLocalDate().isEqual(localDateNow)) {
-                count++;
-            }
-        }
-        return new RestaurantWithVotes(rest.getId(), rest.getName(), rest.getAddress(), count);
-    }
+
 }
