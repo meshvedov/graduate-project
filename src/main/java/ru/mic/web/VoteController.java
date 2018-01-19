@@ -1,5 +1,7 @@
 package ru.mic.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,9 @@ import ru.mic.service.VoteService;
 @RestController
 @RequestMapping("/rest/restaurants")
 public class VoteController {
+
+    private final Logger logger = LoggerFactory.getLogger(VoteController.class);
+
     @Autowired
     private VoteService voteService;
 
@@ -22,6 +27,8 @@ public class VoteController {
         if (saved == null) {
             return new ResponseEntity<Vote>(HttpStatus.CONFLICT);
         }
+
+        logger.info("createVote: {} ", saved);
         return new ResponseEntity<Vote>(saved, HttpStatus.OK);
     }
 }

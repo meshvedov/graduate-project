@@ -29,19 +29,15 @@ public class ScheduledTasks {
     @Autowired
     private HistoryRepository historyRepository;
 
-//    @Scheduled(cron = "* 0 0 * * *")
-    @Transactional
-    @Scheduled(fixedRate = 100_000)
+    @Scheduled(cron = "0 59 23 * * *")
+//    @Scheduled(fixedRate = 100_000)
     public void work() {
-        log.info("Time is NOW {}", LocalDateTime.now());
-
         List<RestaurantWithVotes> restaurantWithVotes = restaurantService.getAll();
-//        LocalDateTime date = LocalDateTime.of(LocalDate.now(), LocalTime.now());
         LocalDate date = LocalDate.now();
         List<History> collect = restaurantWithVotes.stream().map(r -> new History(r.getName(), r.getVotes(), date)).collect(Collectors.toList());
 
         List<History> historyList = historyRepository.saveAll(collect);
-        int i = 0;
+        log.info("Create a historyList: {} at date {}",historyList,  LocalDateTime.now());
     }
 
 }

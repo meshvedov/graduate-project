@@ -1,5 +1,7 @@
 package ru.mic.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,12 +23,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/restaurants")
 public class RestaurantController {
 
+    private final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
+
     @Autowired
     private RestaurantService restaurantService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestaurantWithVotes>> listRests() {
         List<RestaurantWithVotes> list = restaurantService.getAll();
+
+        logger.info("listRestaurants: {}", list);
         return new ResponseEntity<List<RestaurantWithVotes>>(list, HttpStatus.OK);
     }
 

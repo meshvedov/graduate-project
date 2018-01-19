@@ -17,11 +17,6 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @Query("SELECT m FROM Menu m WHERE m.restaurant.id=:restaurantId")
     List<Menu> getMenusByRestaurantId(@Param("restaurantId") int restId);
 
-//    @Modifying
-//    @Transactional
-//    @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restaurant.id=:restId")
-//    void delete(@Param("id") int id, @Param("restId") int restId);
-
     @Transactional
     void deleteMenuByIdAndRestaurantId(@Param("id") int id, @Param("restaurantId") int restaurantId);
 

@@ -15,6 +15,7 @@ public class SpringSecurityConfiguration_Database extends WebSecurityConfigurerA
 
     @Autowired
     private UserService userService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
