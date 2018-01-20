@@ -36,7 +36,7 @@ public class VoteServiceTest extends AbstractServiceTest {
     public void saveVoteRepeated() throws Exception {
         int hour = LocalTime.now().getHour();
         if (hour == 23)
-            service.setTIME(23);
+            return;
         else service.setTIME(hour + 1);
 
         User user = new User(null, "qqq", "qqq", Role.ROLE_USER);
@@ -52,7 +52,7 @@ public class VoteServiceTest extends AbstractServiceTest {
     public void saveVoteRepeatedAfterTime() throws Exception {
         int hour = LocalTime.now().getHour();
         if (hour == 0)
-            service.setTIME(0);
+            return;
         else service.setTIME(hour - 1);
 
         User user = new User(null, "qqq", "qqq", Role.ROLE_USER);
