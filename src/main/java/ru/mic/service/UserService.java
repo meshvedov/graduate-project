@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.mic.model.Role;
 import ru.mic.model.User;
@@ -16,6 +17,9 @@ import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Autowired
     private UserRepository userRepository;
     @Override
@@ -26,7 +30,8 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("OOPS! User not found ");
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), getAuthorities(user));
+        String password = "{bcrypt}" + encoder.encode(user.getPassword());
+        return new org.springframework.security.core.userdetails.User(user.getName(), password, getAuthorities(user));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(User user) {
